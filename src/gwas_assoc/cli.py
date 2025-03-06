@@ -33,10 +33,10 @@ def cli() -> None:
 
 
 @cli.command()
-@click.argument("file", type=click.Path(exists=True))
-def validate(file: str) -> None:
+@click.argument("_file", type=click.Path(exists=True))
+def validate(_file: str) -> None:
     """Validate SNPs in an Excel file."""
-    file_path = Path(file)
+    file_path = Path(_file)
 
     console.print(f"Starting validation of [bold]{file_path}[/]")
 
@@ -50,7 +50,7 @@ def validate(file: str) -> None:
 
         try:
             validator = SnpValidator()
-            result = validator.validate_snps(file)
+            result = validator.validate_snps(file_path)
             progress.update(task, completed=True)
         except Exception as e:
             progress.update(

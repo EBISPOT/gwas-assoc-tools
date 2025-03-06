@@ -29,7 +29,7 @@ class SnpValidator:
         """
         self.ensembl_api_url = "https://rest.ensembl.org/variation/human/"
 
-    def _get_study_tags(self, file_path: str) -> Set:
+    def _get_study_tags(self, file_path: Path) -> Set:
         # Read study sheet to get study tags
         console.print("[info]Reading study tags...[/]")
         try:
@@ -44,7 +44,7 @@ class SnpValidator:
             print_error(f"Error reading study sheet: {str(e)}")
             return set()
 
-    def _get_schema_version(self, file_path: str) -> str:
+    def _get_schema_version(self, file_path: Path) -> str:
         """Get the schema version from the meta sheet of the Excel file"""
         console.print("[info]Reading schema version...[/]")
         meta_df = pd.read_excel(file_path, sheet_name="meta")
@@ -224,7 +224,7 @@ class SnpValidator:
             pd.DataFrame(invalid_rows) if invalid_rows else pd.DataFrame()
         )
 
-    def validate_snps(self, file_path: str) -> bool:
+    def validate_snps(self, file_path: Path) -> bool:
         """
         Validate SNPs from an Excel file
 

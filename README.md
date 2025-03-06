@@ -4,8 +4,8 @@ A command-line tool for genomic-wide association studies (GWAS) data validation 
 
 ## Features
 
-- Validate: 
-  - Input: GWAS Submission template that contains top associations
+- Validate:
+  - Input: File path of GWAS Submission template that contains top associations
   - Output: Validation report of top associations
 
 ## Installation
@@ -102,4 +102,3 @@ poetry run pre-commit run --all-files
 ## License
 
 [License](LICENSE)
-
