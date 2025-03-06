@@ -34,8 +34,7 @@ def cli() -> None:
 
 @cli.command()
 @click.argument("file", type=click.Path(exists=True))
-@click.option("--output", "-o", help="Output file for validation results")
-def validate(file: str, output: str) -> None:
+def validate(file: str) -> None:
     """Validate SNPs in an Excel file."""
     file_path = Path(file)
 
@@ -47,7 +46,7 @@ def validate(file: str, output: str) -> None:
         TextColumn("[progress.description]{task.description}"),
         console=console,
     ) as progress:
-        task = progress.add_task("Running SNP validation...", total=None)
+        task = progress.add_task("SNP validation complete.", total=None)
 
         try:
             validator = SnpValidator()
@@ -62,8 +61,6 @@ def validate(file: str, output: str) -> None:
 
     if result:
         console.print("[success]✓ Validation completed successfully[/]")
-        if output:
-            console.print(f"Results written to [highlight]{output}[/]")
     else:
         console.print("[error]✗ Validation failed[/]")
         sys.exit(1)
