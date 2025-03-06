@@ -180,3 +180,6 @@ poetry.lock
 
 # GitLab CI
 .pip-cache/
+
+# Mac
+.DS_Store
