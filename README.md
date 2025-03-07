@@ -13,7 +13,7 @@ A command-line tool for genomic-wide association studies (GWAS) data validation 
 Install from PyPI:
 
 ```bash
-pip install gwas-assoc
+pip install gwas-assoc-tools
 ```
 
 ## Usage

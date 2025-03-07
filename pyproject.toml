@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "gwas-assoc"
+name = "gwas-assoc-tools"
 version = "0.1.0"
 description = "GWAS Association Tools"
 authors = ["Karatug Ozan Bircan <karatugo@ebi.ac.uk>"]
