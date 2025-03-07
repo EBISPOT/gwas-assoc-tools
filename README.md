@@ -10,7 +10,11 @@ A command-line tool for genomic-wide association studies (GWAS) data validation 
 
 ## Installation
 
-TODO
+Install from PyPI:
+
+```bash
+pip install gwas-assoc
+```
 
 ## Usage
 
@@ -44,11 +48,8 @@ poetry shell
 # Build the package (creates .whl and .tar.gz in dist/)
 poetry build
 
-# Install your package in development mode
+# Install your new package in development mode
 poetry install
-
-# Export requirements.txt (if needed)
-poetry export -f requirements.txt --output requirements.txt
 ```
 
 ### Testing
