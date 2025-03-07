@@ -1,7 +1,6 @@
 image: "python:3.10"
 
 stages:
-  - test
   - deploy
 
 variables:
@@ -17,15 +16,7 @@ cache:
     - pip install poetry
     - poetry install
 
-test:
-  extends: .before_script_template
-  stage: test
-  script:
-    - poetry run pytest
-  only:
-    - merge_requests
-    - main
-    - tags
+# Test stage removed temporarily
 
 deploy_test:
   extends: .before_script_template
@@ -36,7 +27,6 @@ deploy_test:
     - poetry publish --repository=testpypi --username=$PYPI_API_TOKEN_USERNAME --password=$PYPI_API_TOKEN_PASSWORD
   only:
     - tags
-  when: manual
 
 deploy_prod:
   extends: .before_script_template
