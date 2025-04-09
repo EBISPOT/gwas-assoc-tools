@@ -185,6 +185,22 @@ class SnpValidator:
                         import re
 
                         if template_pattern == "$p-value$":
+                            try:
+                                _ = float(str(value))
+                            except Exception as e:
+                                pass
+
+                            if _ <= 0:
+                                invalid_values[
+                                    col
+                                ] = f"Value {_} is less than or equal to 0"
+                                row_valid = False
+                            elif _ >= 1:
+                                invalid_values[
+                                    col
+                                ] = f"Value {_} is greater than or equal to 1"
+                                row_valid = False
+
                             # Special case for p-values in scientific notation
                             pattern = r"^[0-9]+(\.[0-9]+)?([eE][-+]?[0-9]+)?$"
                         else:
