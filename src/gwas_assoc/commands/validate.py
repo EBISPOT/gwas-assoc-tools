@@ -100,6 +100,7 @@ class SnpValidator:
             header = row["HEADER"]
             if isinstance(header, str):
                 template_dict[header] = {
+                    "name": row["NAME"],
                     "type": row["TYPE"],
                     "pattern": (
                         row["PATTERN"] if not pd.isna(row["PATTERN"]) else None
@@ -149,7 +150,19 @@ class SnpValidator:
                 try:
                     template_pattern = str(template["pattern"])
                     if template["type"] == "number" and not pd.isna(value):
-                        _ = float(str(value))
+                        print(template)
+                        name = template.get("name")
+                        try:
+                            _ = float(str(value))
+                        except Exception as e:
+                            invalid_values[col] = f"The value {_} for '{name}' should be float: {str(e)}"
+                            row_valid = False
+
+                        if name == "odds_ratio":
+                            if _ <= 0:
+                                invalid_values[col] = f"Value {_} is less than or equal to 0"
+                                row_valid = False
+
 
                         # Range validation
                         if template["lower"] is not None:
