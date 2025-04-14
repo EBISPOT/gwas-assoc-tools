@@ -160,12 +160,11 @@ class SnpValidator:
                             ] = f"The value {_} for '{name}' should be float: {str(e)}"
                             row_valid = False
 
-                        if name == "odds_ratio":
-                            if _ <= 0:
-                                invalid_values[
-                                    col
-                                ] = f"Value {_} is less than or equal to 0"
-                                row_valid = False
+                        if name == "odds_ratio" and _ <= 0:
+                            invalid_values[
+                                col
+                            ] = f"Value {_} is less than or equal to 0"
+                            row_valid = False
 
                         # Range validation
                         if template["lower"] is not None:
