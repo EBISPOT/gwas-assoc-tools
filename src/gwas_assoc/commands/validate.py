@@ -1,4 +1,5 @@
 import argparse
+import contextlib
 import io
 import logging
 from pathlib import Path
@@ -200,10 +201,8 @@ class SnpValidator:
                         import re
 
                         if template_pattern == "$p-value$":
-                            try:
+                            with contextlib.suppress(Exception):
                                 _ = float(str(value))
-                            except Exception:
-                                pass
 
                             if _ <= 0:
                                 invalid_values[
