@@ -2,7 +2,7 @@ import argparse
 import io
 import logging
 from pathlib import Path
-from typing import Any, Dict, Optional, Set, Tuple, Union
+from typing import Any, Dict, Optional, Set, Tuple
 
 import pandas as pd
 import requests
@@ -155,14 +155,17 @@ class SnpValidator:
                         try:
                             _ = float(str(value))
                         except Exception as e:
-                            invalid_values[col] = f"The value {_} for '{name}' should be float: {str(e)}"
+                            invalid_values[
+                                col
+                            ] = f"The value {_} for '{name}' should be float: {str(e)}"
                             row_valid = False
 
                         if name == "odds_ratio":
                             if _ <= 0:
-                                invalid_values[col] = f"Value {_} is less than or equal to 0"
+                                invalid_values[
+                                    col
+                                ] = f"Value {_} is less than or equal to 0"
                                 row_valid = False
-
 
                         # Range validation
                         if template["lower"] is not None:
@@ -200,7 +203,7 @@ class SnpValidator:
                         if template_pattern == "$p-value$":
                             try:
                                 _ = float(str(value))
-                            except Exception as e:
+                            except Exception:
                                 pass
 
                             if _ <= 0:
@@ -420,18 +423,6 @@ class SnpValidator:
                 f"Found [highlight]{len(snp_names)}[/] unique SNP IDs to validate"
             )
 
-            # # Validate SNPs against Ensembl
-            # console.print("\n[bold]Validating SNPs against Ensembl:[/]")
-            # try:
-            #     valid_variations, valid_synonyms = self._validate_with_ensembl(
-            #         snp_names
-            #     )
-            #     if not valid_variations and not valid_synonyms:
-            #         return False
-            # except Exception as e:
-            #     print_error(f"Ensembl validation failed: {str(e)}")
-            #     return False
-
             # Success panel
             console.print(
                 Panel(
@@ -445,122 +436,6 @@ class SnpValidator:
             console.print_exception()
             print_error(f"SNP Validation Error: {str(e)}")
             return False
-
-    # def _validate_with_ensembl(
-    #     self, snp_names: Set[str]
-    # ) -> Tuple[Union[bool, Set[str]], Union[bool, Set[str]]]:
-    #     """
-    #     Validate SNPs using Ensembl API
-
-    #     Args:
-    #         snp_names: Set of SNP IDs to validate
-
-    #     Returns:
-    #         Tuple containing sets of valid variations and valid synonyms
-    #     """
-    #     valid_variations = set()
-    #     valid_synonyms = set()
-    #     invalid_snps = set()
-
-    #     # Batch requests to avoid overwhelming the API
-    #     batch_size = 100
-    #     snp_list = list(snp_names)
-    #     total_snps = len(snp_list)
-
-    #     # Create progress display for Ensembl validation
-    #     # - don't nest with other live displays
-    #     console.print(
-    #         f"Starting validation of {total_snps} SNPs against Ensembl API..."
-    #     )
-
-    #     # Simple counter instead of nested progress display
-    #     validated_count = 0
-
-    #     for i in range(0, len(snp_list), batch_size):
-    #         batch = snp_list[i : i + batch_size]
-
-    #         # Show batch progress
-    #         console.print(
-    #             f"Processing batch "
-    #             f"{i//batch_size + 1}/{(total_snps + batch_size - 1)//batch_size}..."
-    #         )
-
-    #         for snp in batch:
-    #             validated_count += 1
-    #             if validated_count % 10 == 0:  # Show progress every 10 SNPs
-    #                 console.print(f"Validated {validated_count}/{total_snps} SNPs...")
-
-    #             try:
-    #                 # Check if it's a valid primary variation
-    #                 response = requests.get(
-    #                     f"{self.ensembl_api_url}{snp}",
-    #                     headers={"Content-Type": "application/json"},
-    #                     timeout=5,
-    #                 )
-
-    #                 if response.status_code == 200:
-    #                     valid_variations.add(snp)
-    #                 else:
-    #                     # Check if it's a synonym
-    #                     synonym_response = requests.get(
-    #                         f"{self.ensembl_api_url}{snp}/synonyms",
-    #                         headers={"Content-Type": "application/json"},
-    #                         timeout=5,
-    #                     )
-
-    #                     if synonym_response.status_code == 200:
-    #                         valid_synonyms.add(snp)
-    #                     else:
-    #                         invalid_snps.add(snp)
-
-    #                         # Display error information in console
-    #                         print_error(f"SNP {snp} is not valid: {response.text}")
-    #                         return False, False
-
-    #             except Exception as e:
-    #                 console.print(
-    #                     f"[warning]Error validating SNP [highlight]{snp}[/]: "
-    #                     f"{str(e)}[/]"
-    #                 )
-    #                 continue
-
-    #     console.print(f"[success]All {total_snps} SNPs validated successfully[/]")
-
-    #     # Create validation results to display
-    #     validation_checks = [
-    #         {
-    #             "name": "Valid Primary SNPs",
-    #             "status": "pass",
-    #             "details": (
-    #                 f"{len(valid_variations)} ({len(valid_variations)/total_snps:.1%})"
-    #             ),
-    #         },
-    #         {
-    #             "name": "Valid Synonym SNPs",
-    #             "status": "pass",
-    #             "details": (
-    #                 f"{len(valid_synonyms)} ({len(valid_synonyms)/total_snps:.1%})"
-    #             ),
-    #         },
-    #         {
-    #             "name": "Total Valid SNPs",
-    #             "status": "pass",
-    #             "details": f"{len(valid_variations) + len(valid_synonyms)} "
-    #             f"({(len(valid_variations) + len(valid_synonyms))/total_snps:.1%})",
-    #         },
-    #     ]
-
-    #     # Use the shared method to display the validation summary
-    #     from gwas_assoc.utils.console import display_validation_summary
-
-    #     display_validation_summary(
-    #         "SNP Validation",
-    #         "Ensembl API",
-    #         validation_checks,
-    #         verbose=True,
-    #     )
-
-    #     return valid_variations, valid_synonyms
 
 
 def main() -> None:
