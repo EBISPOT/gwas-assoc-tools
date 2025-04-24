@@ -60,11 +60,19 @@ TODO
 
 ```bash
 # Run the CLI command through Poetry
-poetry run gwas-assoc validate ./tests/snp_validator.xlsx
+# For failed test file
+poetry run gwas-assoc validate ./tests/test_fail.xlsx   
+# For successful test file
+poetry run gwas-assoc validate ./tests/test_success.xlsx   
+
 
 # Or after activating the shell
 poetry shell
-gwas-assoc validate ./tests/snp_validator.xlsx
+# For failed test file
+gwas-assoc validate ./tests/test_fail.xlsx   
+# For successful test file
+gwas-assoc validate ./tests/test_success.xlsx   
+
 ```
 
 ### Dependency Management
