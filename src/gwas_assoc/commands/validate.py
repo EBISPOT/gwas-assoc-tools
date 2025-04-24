@@ -151,7 +151,6 @@ class SnpValidator:
                 try:
                     template_pattern = str(template["pattern"])
                     if template["type"] == "number" and not pd.isna(value):
-                        print(template)
                         name = template.get("name")
                         try:
                             _ = float(str(value))
@@ -356,7 +355,7 @@ class SnpValidator:
                         error_summary[column] += 1
 
                 # Create summary table
-                summary_table = Table(title="Validation Error Summary")
+                summary_table = Table(title="")
                 summary_table.add_column("Field", style="header")
                 summary_table.add_column("Error Count", style="error")
 
