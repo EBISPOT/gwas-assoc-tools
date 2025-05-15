@@ -292,6 +292,11 @@ class SnpValidator:
 
             console.print(f"Loaded [highlight]{len(associations_df)}[/] associations")
 
+            if associations_df.empty:
+                msg = (f"The '{sheet_name}' sheet has headers but no data rows were found.")
+                print_error(msg)
+                return False
+
             # Check required columns
             required_columns = [col_study_tag, col_variant_id]
             missing_columns = [
