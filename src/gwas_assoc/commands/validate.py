@@ -208,10 +208,10 @@ class SnpValidator:
                                     col
                                 ] = f"Value {_} is less than or equal to 0"
                                 row_valid = False
-                            elif _ >= 1:
+                            elif _ >= 1e-05:
                                 invalid_values[
                                     col
-                                ] = f"Value {_} is greater than or equal to 1"
+                                ] = f"Value {_} is greater than or equal to 1e-05"
                                 row_valid = False
 
                             # Special case for p-values in scientific notation
