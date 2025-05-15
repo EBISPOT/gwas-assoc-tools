@@ -37,6 +37,11 @@ class SnpValidator:
             study_df = pd.read_excel(
                 file_path, sheet_name="study", skiprows=range(1, 4)
             )
+
+            if study_df.empty:
+                print_error("Study sheet is empty or no data found.")
+                return set()
+
             tags = set(study_df.iloc[:, 0].tolist())
             console.print(f"Found [highlight]{len(tags)}[/] study tags")
             return tags
@@ -293,7 +298,9 @@ class SnpValidator:
             console.print(f"Loaded [highlight]{len(associations_df)}[/] associations")
 
             if associations_df.empty:
-                msg = (f"The '{sheet_name}' sheet has headers but no data rows were found.")
+                msg = (
+                    f"The '{sheet_name}' sheet has headers but no data rows were found."
+                )
                 print_error(msg)
                 return False
 
@@ -310,6 +317,9 @@ class SnpValidator:
 
             # Validate study tags
             study_tags: Set = self._get_study_tags(file_path)
+            if not study_tags:
+                print_error("No study tags loaded.")
+                return False
 
             # Create a table for invalid study tags
             invalid_tags_found = False
