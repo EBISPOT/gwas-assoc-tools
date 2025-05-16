@@ -108,6 +108,9 @@ poetry run mypy src
 poetry run pre-commit run --all-files
 ```
 
+## Documentation
+Please find the Confluence page here: https://embl.atlassian.net/wiki/spaces/GOCI/pages/57606184/GWAS+Associations+Tools
+
 ## License
 
 [License](LICENSE)
