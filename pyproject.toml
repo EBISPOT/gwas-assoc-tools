@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "gwas-assoc-tools"
-version = "0.1.2-beta.3"
+version = "0.1.2"
 description = "GWAS Association Tools"
 authors = ["Karatug Ozan Bircan <karatugo@ebi.ac.uk>"]
 readme = "README.md"
